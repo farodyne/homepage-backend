@@ -6,11 +6,22 @@
 import { settings } from '../utils';
 
 class Album {
-    constructor(id, type, caption) {
-        this.id = id;
-        this.type = type;
-        this.caption = caption;
-        this.images = [];
-        this.path = `${settings.contentUrl}/${type}/${id}`;
+    /**
+     * Creates a frontend model instance of an album.
+     * @param {Object} album - The database representation for the album.
+     */
+    constructor(album) {
+        this.id = album.id;
+        this.type = album.type;
+        this.caption = album.caption;
+
+        this.images = album.images.map((image) => {
+            return {
+                caption: image.caption,
+                url: `${settings.contentUrl}/${album.type}/${album.id}/${image.id}.jpg`
+            };
+        });
     }
 }
+
+export default Album;

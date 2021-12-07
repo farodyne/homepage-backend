@@ -8,6 +8,7 @@ import cors from 'cors';
 import express from 'express';
 import bodyParser from 'body-parser';
 import { settings } from '../utils';
+import { Album } from '../models';
 
 class RespApi {
     /**
@@ -31,13 +32,20 @@ class RespApi {
         this.api.listen(settings.serverPort);
     }
 
+    /**
+     * Method that registers the API endpoints.
+     */
     registerRestApiEndpoints() {
+        /**
+         * The endpoint that returns a specific album with its images. If the album
+         * does not exist, an HTTP error 404 is returned.
+         */
         this.api.get(settings.apiRoot + '/albums/:id', async (req, res) => {
             const id = req.params.id;
-            const album = await this.dbClient.getAlbum(id);
+            const cursor = await this.dbClient.getAlbum(id);
 
-            if (album) {
-                res.json({ album });
+            if (cursor) {
+                res.json(new Album(cursor));
             } else {
                 res.status(404).send({ error: `No album with id: ${id}.` });
             }

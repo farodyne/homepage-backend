@@ -1,3 +1,4 @@
+import DbClient from './db-client';
 import settings from './settings';
 
-export { settings };
+export { DbClient, settings };

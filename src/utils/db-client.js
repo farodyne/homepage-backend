@@ -1,8 +1,20 @@
+/**
+ * Author: Federico Engler
+ *
+ * This class implements an API class that abstracts away the database layer from the
+ * rest of the application. Injected as a dependency to the REST API layer, it becomes
+ * simple to mock the behaviour in tests.
+ */
 import { MongoClient } from 'mongodb';
+import settings from './settings';
 
 class DbClient {
-    constructor() {
-        this.client = new MongoClient('mongodb://localhost:27017/farodyne');
+    /**
+     * Constructs an instance of the database client.
+     */
+    constructor(database) {
+        const { dbUsername, dbPassword } = settings;
+        this.client = new MongoClient(`mongodb://${dbUsername}:${dbPassword}@localhost:27017/${database}`);
 
         try {
             this.client.connect();

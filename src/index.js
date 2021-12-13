@@ -1,5 +1,5 @@
 import { RestApi } from './rest';
-import { DbClient } from './utils';
+import { DbClient, settings } from './utils';
 
-const api = new RestApi(new DbClient());
+const api = new RestApi(new DbClient(settings.dbName));
 api.start();

@@ -14,9 +14,9 @@ class DbClient {
      */
     constructor(database) {
         const { dbUsername, dbPassword } = settings;
-        this.client = new MongoClient(`mongodb://${dbUsername}:${dbPassword}@localhost:27017/${database}`);
 
         try {
+            this.client = new MongoClient(`mongodb://${dbUsername}:${dbPassword}@localhost:27017/${database}`);
             this.client.connect();
             console.info('Successfully connected to the database.');
         } catch (error) {

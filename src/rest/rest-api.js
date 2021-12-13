@@ -8,7 +8,7 @@ import cors from 'cors';
 import express from 'express';
 import bodyParser from 'body-parser';
 import { settings } from '../utils';
-import { Album } from '../models';
+import { Album, Section } from '../models';
 
 class RespApi {
     /**
@@ -41,13 +41,30 @@ class RespApi {
          * does not exist, an HTTP error 404 is returned.
          */
         this.api.get(settings.apiRoot + '/albums/:id', async (req, res) => {
-            const id = req.params.id;
+            const {
+                params: { id }
+            } = req;
+
             const cursor = await this.dbClient.getAlbum(id);
 
             if (cursor) {
                 res.json(new Album(cursor));
             } else {
                 res.status(404).send({ error: `No album with id: ${id}.` });
+            }
+        });
+
+        this.api.get(settings.apiRoot + '/sections/:type', async (req, res) => {
+            const {
+                params: { type }
+            } = req;
+
+            const cursor = await this.dbClient.getSection(type);
+
+            if (cursor) {
+                res.json(new Section(await cursor.toArray()));
+            } else {
+                res.status(404).send({ error: `No section of type: ${type}.` });
             }
         });
     }

@@ -32,6 +32,15 @@ class DbClient {
     async getAlbum(id) {
         return await this.client.db().collection('albums').findOne({ id });
     }
+
+    /**
+     * Method to return a section of miniature album objects.
+     * @param {string} type - The type of albums in the section.
+     * @returns The section (array) of albums of the specified type.
+     */
+    async getSection(type) {
+        return await this.client.db().collection('albums').find({ type });
+    }
 }
 
 export default DbClient;

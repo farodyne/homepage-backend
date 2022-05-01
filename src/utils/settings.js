@@ -8,7 +8,7 @@
 export default {
     apiRoot: process.env.API_ROOT || '/rest',
     dbName: process.env.FARODYNE_DB_NAME || 'farodyne',
-    dbUsername: process.env.FARODYNE_DB_USER || '',
+    dbUsername: process.env.FARODYNE_DB_USERNAME || '',
     dbPassword: process.env.FARODYNE_DB_PASSWORD || '',
     contentUrl: process.env.CONTENT_URL || 'http://www.farodyne.com/content',
     serverPort: process.env.SERVER_PORT || 3100

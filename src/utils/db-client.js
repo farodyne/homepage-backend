@@ -14,7 +14,7 @@ class DbClient {
      * Constructs an instance of the database client.
      */
     constructor(database) {
-        const { dbPort, dbName, dbUsername, dbPassword } = settings;
+        const { dbHost, dbPort, dbName, dbUsername, dbPassword } = settings;
 
         // Verify that the critical database details have been provided.
         assert(dbPort, 'The database port must be specified.');
@@ -23,7 +23,7 @@ class DbClient {
         assert(dbPassword, 'The database password must be specified.');
 
         try {
-            this.client = new MongoClient(`mongodb://${dbUsername}:${dbPassword}@localhost:${dbPort}/${database}`);
+            this.client = new MongoClient(`mongodb://${dbUsername}:${dbPassword}@${dbHost}:${dbPort}/${database}`);
             this.client.connect();
             console.info('Successfully connected to the database.');
         } catch (error) {

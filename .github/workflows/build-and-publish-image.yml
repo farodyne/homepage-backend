@@ -1,0 +1,29 @@
+name: Farodyne backend image CI
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+  workflow_dispatch:
+   
+
+jobs:
+
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+        name: Check out the code
+
+      - uses: mr-smithers-excellent/docker-build-push@v5
+        name: Build and push Docker image
+        with:
+          image: homepage-database
+          tags: v1, latest
+          registry: ghcr.io
+          dockerfile: Dockerfile
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}

@@ -1,6 +1,6 @@
 # Author: Federico Engler
 #
-# The Dockerfile use to create the image for our backend.
+# The Dockerfile used to create the image for our backend.
 FROM node:16.15
 
 # Install the dependencies on an early layer so that changes in the source code

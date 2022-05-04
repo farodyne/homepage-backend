@@ -7,13 +7,12 @@
  */
 import assert from 'assert';
 import { MongoClient } from 'mongodb';
-import settings from './settings';
 
 class DbClient {
     /**
      * Constructs an instance of the database client.
      */
-    constructor(database) {
+    constructor(settings) {
         const { dbHost, dbPort, dbName, dbUsername, dbPassword } = settings;
 
         // Verify that the critical database details have been provided.
@@ -23,13 +22,8 @@ class DbClient {
         assert(dbUsername, 'The database username must be specified.');
         assert(dbPassword, 'The database password must be specified.');
 
-        console.log(
-            'AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA',
-            `mongodb://${dbUsername}:${dbPassword}@${dbHost}:${dbPort}/${database}`
-        );
-
         try {
-            this.client = new MongoClient(`mongodb://${dbUsername}:${dbPassword}@${dbHost}:${dbPort}/${database}`);
+            this.client = new MongoClient(`mongodb://${dbUsername}:${dbPassword}@${dbHost}:${dbPort}/${dbName}`);
             this.client.connect();
             console.info('Successfully connected to the database.');
         } catch (error) {

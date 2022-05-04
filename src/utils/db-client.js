@@ -17,10 +17,16 @@ class DbClient {
         const { dbHost, dbPort, dbName, dbUsername, dbPassword } = settings;
 
         // Verify that the critical database details have been provided.
+        assert(dbHost, 'The database host must be specified.');
         assert(dbPort, 'The database port must be specified.');
         assert(dbName, 'The database name must be specified.');
         assert(dbUsername, 'The database username must be specified.');
         assert(dbPassword, 'The database password must be specified.');
+
+        console.log(
+            'AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA',
+            `mongodb://${dbUsername}:${dbPassword}@${dbHost}:${dbPort}/${database}`
+        );
 
         try {
             this.client = new MongoClient(`mongodb://${dbUsername}:${dbPassword}@${dbHost}:${dbPort}/${database}`);

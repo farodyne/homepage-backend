@@ -31,6 +31,7 @@ class RespApi {
      * that it allows us to perform unit tests without using up an actual port.
      */
     start() {
+        console.info('Backend API root:', settings.apiRoot);
         console.info('Started REST API on port:', settings.serverPort);
         this.api.listen(settings.serverPort);
     }

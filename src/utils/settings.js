@@ -6,7 +6,7 @@
  * manner in this way.
  */
 export default {
-    apiRoot: process.env.API_ROOT || '/rest',
+    apiRoot: process.env.API_ROOT || '/rest/v1',
     dbPort: process.env.FARODYNE_DB_PORT || 27017,
     dbName: process.env.FARODYNE_DB_NAME || 'farodyne',
     dbHost: process.env.FARODYNE_DB_HOST || 'database',

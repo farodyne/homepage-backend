@@ -14,7 +14,7 @@ class Album {
         this.id = album.id;
         this.type = album.type;
         this.caption = album.caption;
-        this.ratio = album.ratio | '850 / 1275';
+        this.ratio = album.ratio || '850 / 1275';
 
         this.images = album.images.map((image) => {
             return {

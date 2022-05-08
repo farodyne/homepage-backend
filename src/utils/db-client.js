@@ -32,6 +32,15 @@ class DbClient {
     }
 
     /**
+     * Method to return the N newest albums from the database.
+     * @param {number} limit - The size limit of the result set.
+     * @returns An array of the latest N albums.
+     */
+    async getNews(limit) {
+        return await this.client.db().collection('albums').find({}).sort({ created: -1 }).limit(limit);
+    }
+
+    /**
      * Method to return the album with the provided identifier.
      * @param {string} id - The album ID.
      * @returns The album object with its images.

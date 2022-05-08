@@ -8,7 +8,7 @@ import cors from 'cors';
 import express from 'express';
 import bodyParser from 'body-parser';
 import { settings } from '../utils';
-import { Album, Section } from '../models';
+import { Album, AlbumMiniature, Section } from '../models';
 
 class RespApi {
     /**
@@ -22,6 +22,7 @@ class RespApi {
         this.database = database;
 
         // Register the endpoints to local class methods.
+        this.api.get(settings.apiRoot + '/news', this.getNews.bind(this));
         this.api.get(settings.apiRoot + '/albums/:id', this.getAlbum.bind(this));
         this.api.get(settings.apiRoot + '/sections/:type', this.getSection.bind(this));
     }
@@ -37,6 +38,20 @@ class RespApi {
     }
 
     /**
+     * Fetches the three newest albums from the database.
+     */
+    async getNews(_, res) {
+        const cursor = await this.database.getNews(3);
+
+        if (cursor) {
+            const newest = await cursor.toArray();
+            res.json(newest.map((newest) => new AlbumMiniature(newest)));
+        } else {
+            res.status(404).send({ error: `Failed to get the newest albums.` });
+        }
+    }
+
+    /**
      * Method for retrieving an individual photo album.
      * @param {Object} req - An Express request object.
      * @param {Object} res - An Express return object.
@@ -46,6 +61,9 @@ class RespApi {
             params: { id }
         } = req;
 
+        const ip = req.headers['x-forwarded-for'] || req.socket.remoteAddress;
+
+        console.info(`Hanling GET request (${ip}) for album: ${id}`);
         const cursor = await this.database.getAlbum(id);
 
         if (cursor) {

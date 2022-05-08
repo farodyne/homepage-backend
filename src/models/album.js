@@ -12,6 +12,7 @@ class Album {
      */
     constructor(album) {
         this.id = album.id;
+        this.created = album.created;
         this.type = album.type;
         this.caption = album.caption;
         this.height = album.height || 850;

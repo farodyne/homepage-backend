@@ -12,6 +12,6 @@ export default {
     dbHost: process.env.FARODYNE_DB_HOST || 'database',
     dbUsername: process.env.FARODYNE_DB_USERNAME || '',
     dbPassword: process.env.FARODYNE_DB_PASSWORD || '',
-    contentUrl: process.env.CONTENT_URL || 'http://www.farodyne.com/content',
+    contentUrl: process.env.CONTENT_URL || 'https://www.farodyne.com/content',
     serverPort: process.env.SERVER_PORT || 3100
 };

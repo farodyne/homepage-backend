@@ -45,7 +45,7 @@ class RespApi {
             params: { count }
         } = req;
 
-        const cursor = await this.database.getNews(count || 3);
+        const cursor = await this.database.getNews(Number(count || 3));
 
         if (cursor) {
             const newest = await cursor.toArray();

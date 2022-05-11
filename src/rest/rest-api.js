@@ -22,7 +22,7 @@ class RespApi {
         this.database = database;
 
         // Register the endpoints to local class methods.
-        this.api.get(settings.apiRoot + '/news', this.getNews.bind(this));
+        this.api.get(settings.apiRoot + '/news/:count', this.getNews.bind(this));
         this.api.get(settings.apiRoot + '/albums/:id', this.getAlbum.bind(this));
         this.api.get(settings.apiRoot + '/sections/:type', this.getSection.bind(this));
     }
@@ -40,8 +40,12 @@ class RespApi {
     /**
      * Fetches the three newest albums from the database.
      */
-    async getNews(_, res) {
-        const cursor = await this.database.getNews(4);
+    async getNews(req, res) {
+        const {
+            params: { count }
+        } = req;
+
+        const cursor = await this.database.getNews(count || 3);
 
         if (cursor) {
             const newest = await cursor.toArray();

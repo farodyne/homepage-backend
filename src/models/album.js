@@ -5,6 +5,7 @@
  * and videos.
  */
 import Image from './image';
+import Video from './video';
 import { settings } from '../utils';
 
 class Album {
@@ -19,12 +20,18 @@ class Album {
         this.caption = album.caption;
         this.width = album.width || 1275;
 
-        this.images = album.images.map(
-            (image) => new Image(`${settings.contentUrl}/${album.type}/${album.id}/${image.id}.jpg`, image.caption)
-        );
+        // If the album contains images, transform the array to an array
+        // of frontend image models.
+        this.images = album.images
+            ? album.images.map((image) => {
+                  const url = `${settings.contentUrl}/${album.type}/${album.id}/${image.id}.jpg`;
+                  return new Image(url, image.caption);
+              })
+            : [];
 
-        // Fix this better with proper class for videos and images.
-        this.videos = album.videos ? album.videos.map((video) => new Image(video.url, video.caption)) : [];
+        // If the album contains videos, transform the array to an array
+        // of frontend video models.
+        this.videos = album.videos ? album.videos.map((video) => new Video(video.url, video.caption)) : [];
     }
 }
 

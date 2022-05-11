@@ -1,7 +1,8 @@
 /**
  * Author: Federico Engler
  *
- * A model class used for representing an image in our hierarchy of images.
+ * A model class used for representing an album image in our collection
+ * of images.
  */
 class Image {
     /**

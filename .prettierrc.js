@@ -2,7 +2,7 @@ module.exports = {
     semi: true,
     printWidth: 120,
     singleQuote: true,
-    trailingComma: "none",
+    trailingComma: 'none',
     tabWidth: 4,
-    vueIndentScriptAndStyle: true,
+    vueIndentScriptAndStyle: true
 };

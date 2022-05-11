@@ -41,7 +41,7 @@ class RespApi {
      * Fetches the three newest albums from the database.
      */
     async getNews(_, res) {
-        const cursor = await this.database.getNews(3);
+        const cursor = await this.database.getNews(4);
 
         if (cursor) {
             const newest = await cursor.toArray();

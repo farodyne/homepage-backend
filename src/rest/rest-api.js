@@ -7,6 +7,7 @@
 import cors from 'cors';
 import express from 'express';
 import bodyParser from 'body-parser';
+import basicAuth from 'express-basic-auth';
 import { settings } from '../utils';
 import { Album, AlbumMiniature, Section } from '../models';
 
@@ -18,6 +19,7 @@ class RespApi {
         const api = express();
         api.use(cors());
         api.use(bodyParser.json());
+        api.use(basicAuth({ users: { [settings.apiUser]: settings.apiPassword } }));
         this.api = api;
         this.database = database;
 
@@ -51,6 +53,7 @@ class RespApi {
             const newest = await cursor.toArray();
             res.json(newest.map((newest) => new AlbumMiniature(newest)));
         } else {
+            // TODO: Use proper Error class!
             res.status(404).send({ error: `Failed to get the newest albums.` });
         }
     }

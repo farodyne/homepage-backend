@@ -1,17 +1,23 @@
 /**
  * Author: Federico Engler
  *
- * A common settings object that can be used throught the application. Note
- * that settings values can be read from the environment in a transparent
- * manner in this way.
+ * The purpose of defining this settings object in this manner, is to keep
+ * the logic in my code clean from low-level checks on the process.env object.
+ * Also, this provides a transparent mechanism in which to provide reasonable
+ * default values where applicable.
  */
 export default {
-    apiRoot: process.env.API_ROOT || '/rest/v1',
-    dbPort: process.env.FARODYNE_DB_PORT || 27017,
-    dbName: process.env.FARODYNE_DB_NAME || 'farodyne',
-    dbHost: process.env.FARODYNE_DB_HOST || 'database',
-    dbUsername: process.env.FARODYNE_DB_USERNAME || '',
-    dbPassword: process.env.FARODYNE_DB_PASSWORD || '',
-    contentUrl: process.env.CONTENT_URL || 'https://www.farodyne.com/content',
-    serverPort: process.env.SERVER_PORT || 3100
+    // Database parameters.
+    dbPort: process.env.FARODYNE_DB_PORT,
+    dbName: process.env.FARODYNE_DB_NAME,
+    dbHost: process.env.FARODYNE_DB_HOST,
+    dbUsername: process.env.FARODYNE_DB_USERNAME,
+    dbPassword: process.env.FARODYNE_DB_PASSWORD,
+
+    // REST API parameters.
+    apiUser: process.env.FARODYNE_API_USER,
+    apiPassword: process.env.FARODYNE_API_PASSWORD,
+    serverPort: process.env.FARODYNE_SERVER_PORT,
+    apiRoot: process.env.FARODYNE_API_ROOT || '/rest/v1',
+    contentUrl: process.env.FARODYNE_CONTENT_URL || 'https://www.farodyne.com/content'
 };

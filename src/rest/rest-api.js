@@ -49,6 +49,8 @@ class RespApi {
 
     /**
      * Fetches the N newest albums from the database.
+     * @param {Object} req - An Express request object.
+     * @param {Object} res - An Express return object.
      */
     async getNews(req, res) {
         const {

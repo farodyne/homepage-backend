@@ -13,22 +13,27 @@ import { Album, AlbumMiniature, Section } from '../models';
 
 class RespApi {
     /**
-     * Constructs an instance of our REST API.
+     *
+     * @param {Object} database - A database client.
      */
     constructor(database) {
         const { apiUser, apiPassword, apiRoot } = environment;
+
+        // Create our Express using basic authentication.
         const api = express();
         api.use(cors());
         api.use(bodyParser.json());
         api.use(basicAuth({ users: { [apiUser]: apiPassword } }));
+
+        // Register the endpoints to local class methods.
+        api.get(apiRoot + '/news/:count', this.getNews.bind(this));
+        api.get(apiRoot + '/albums/:id', this.getAlbum.bind(this));
+        api.get(apiRoot + '/sections/:type', this.getSection.bind(this));
+
+        // Store local object references.
         this.api = api;
         this.database = database;
         this.logger = new Logger();
-
-        // Register the endpoints to local class methods.
-        this.api.get(apiRoot + '/news/:count', this.getNews.bind(this));
-        this.api.get(apiRoot + '/albums/:id', this.getAlbum.bind(this));
-        this.api.get(apiRoot + '/sections/:type', this.getSection.bind(this));
     }
 
     /**
@@ -37,13 +42,13 @@ class RespApi {
      */
     start() {
         const { apiRoot, serverPort } = environment;
-        this.logger.info('Backend API root:', apiRoot);
-        this.logger.info('Started REST API on port:', serverPort);
+        this.logger.info(`Backend API root: ${apiRoot}`);
+        this.logger.info(`Started REST API on port: ${serverPort}`);
         this.api.listen(serverPort);
     }
 
     /**
-     * Fetches the three newest albums from the database.
+     * Fetches the N newest albums from the database.
      */
     async getNews(req, res) {
         const {
@@ -56,8 +61,9 @@ class RespApi {
             const newest = await cursor.toArray();
             res.json(newest.map((newest) => new AlbumMiniature(newest)));
         } else {
-            // TODO: Use proper Error class!
-            res.status(404).send({ error: `Failed to get the newest albums.` });
+            const error = 'Failed to fetch latest album thumbnails.';
+            this.logger.error(error);
+            res.status(404).send({ error });
         }
     }
 
@@ -73,13 +79,15 @@ class RespApi {
 
         const ip = req.headers['x-forwarded-for'] || req.socket.remoteAddress;
 
-        console.info(`Hanling GET request (${ip}) for album: ${id}`);
+        this.logger.info(`Hanling GET request (${ip}) for album: ${id}`);
         const cursor = await this.database.getAlbum(id);
 
         if (cursor) {
             res.json(new Album(cursor));
         } else {
-            res.status(404).send({ error: `No album with id: ${id}.` });
+            const error = `No album with id: ${id}.`;
+            this.logger.error(error);
+            res.status(404).send({ error });
         }
     }
 
@@ -87,7 +95,7 @@ class RespApi {
      * Method for retrieving all the photo albums in a particular section, in
      * other words, of a specific type.
      * @param {Object} req - An Express request object.
-     * @param {*} res - An Express response object.
+     * @param {Object} res - An Express response object.
      */
     async getSection(req, res) {
         const {
@@ -99,7 +107,9 @@ class RespApi {
         if (cursor) {
             res.json(new Section(await cursor.toArray()));
         } else {
-            res.status(404).send({ error: `No section of type: ${type}.` });
+            const error = `No section of type: ${type}.`;
+            this.logger.error(error);
+            res.status(404).send({ error });
         }
     }
 }

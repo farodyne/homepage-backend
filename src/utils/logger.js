@@ -21,9 +21,13 @@ class Logger {
         return Winston.createLogger({
             defaultMeta: { service: 'farodyne-backend' },
             transports: [
+                // Register a standard console transport.
                 new Winston.transports.Console({
                     format: Winston.format.json()
                 }),
+
+                // Register a Loki transport to allow me to analyze my logs
+                // and other metrics using a Grafana dashboard.
                 new LokiTransport({
                     host: `${lokiHost}:${lokiPort}`,
                     format: Winston.format.json()

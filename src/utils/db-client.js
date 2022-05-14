@@ -7,12 +7,14 @@
  */
 import assert from 'assert';
 import { MongoClient } from 'mongodb';
+import Logger from './logger';
 
 class DbClient {
     /**
      * Constructs an instance of the database client.
      */
     constructor(settings) {
+        const logger = new Logger();
         const { dbHost, dbPort, dbName, dbUsername, dbPassword } = settings;
 
         // Verify that the critical database details have been provided.
@@ -25,7 +27,7 @@ class DbClient {
         try {
             this.client = new MongoClient(`mongodb://${dbUsername}:${dbPassword}@${dbHost}:${dbPort}/${dbName}`);
             this.client.connect();
-            console.info('Successfully connected to the database.');
+            logger.info('Successfully connected to the database.');
         } catch (error) {
             console.error('Failed to connect to the database:\n', error);
         }

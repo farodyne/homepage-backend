@@ -12,6 +12,7 @@ class AlbumMiniature {
      */
     constructor(album) {
         this.id = album.id;
+        this.type = album.type;
         this.caption = album.caption;
         this.url = `${environment.contentUrl}/${album.type}/${album.id}/thumbnail.jpg`;
     }

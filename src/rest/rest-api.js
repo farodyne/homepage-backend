@@ -8,7 +8,7 @@ import cors from 'cors';
 import express from 'express';
 import bodyParser from 'body-parser';
 import basicAuth from 'express-basic-auth';
-import { settings } from '../utils';
+import { Logger, environment } from '../utils';
 import { Album, AlbumMiniature, Section } from '../models';
 
 class RespApi {
@@ -16,27 +16,30 @@ class RespApi {
      * Constructs an instance of our REST API.
      */
     constructor(database) {
+        const { apiUser, apiPassword, apiRoot } = environment;
         const api = express();
         api.use(cors());
         api.use(bodyParser.json());
-        api.use(basicAuth({ users: { [settings.apiUser]: settings.apiPassword } }));
+        api.use(basicAuth({ users: { [apiUser]: apiPassword } }));
         this.api = api;
         this.database = database;
+        this.logger = new Logger();
 
         // Register the endpoints to local class methods.
-        this.api.get(settings.apiRoot + '/news/:count', this.getNews.bind(this));
-        this.api.get(settings.apiRoot + '/albums/:id', this.getAlbum.bind(this));
-        this.api.get(settings.apiRoot + '/sections/:type', this.getSection.bind(this));
+        this.api.get(apiRoot + '/news/:count', this.getNews.bind(this));
+        this.api.get(apiRoot + '/albums/:id', this.getAlbum.bind(this));
+        this.api.get(apiRoot + '/sections/:type', this.getSection.bind(this));
     }
 
     /**
-     * The reason for separating the starting of the server into a separate method is
-     * that it allows us to perform unit tests without using up an actual port.
+     * The reason for separating the starting of the server into a separate method
+     * is that it allows us to perform unit tests without using up an actual port.
      */
     start() {
-        console.info('Backend API root:', settings.apiRoot);
-        console.info('Started REST API on port:', settings.serverPort);
-        this.api.listen(settings.serverPort);
+        const { apiRoot, serverPort } = environment;
+        this.logger.info('Backend API root:', apiRoot);
+        this.logger.info('Started REST API on port:', serverPort);
+        this.api.listen(serverPort);
     }
 
     /**

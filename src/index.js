@@ -7,7 +7,7 @@
  * layers for separation of concerns.
  */
 import { RestApi } from './rest';
-import { DbClient, settings } from './utils';
+import { DbClient } from './utils';
 
-const api = new RestApi(new DbClient(settings));
+const api = new RestApi(new DbClient());
 api.start();

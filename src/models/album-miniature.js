@@ -3,7 +3,7 @@
  *
  * A model class used for representing an album miniature in a section of albums.
  */
-import { settings } from '../utils';
+import { environment } from '../utils';
 
 class AlbumMiniature {
     /**
@@ -13,7 +13,7 @@ class AlbumMiniature {
     constructor(album) {
         this.id = album.id;
         this.caption = album.caption;
-        this.url = `${settings.contentUrl}/${album.type}/${album.id}/thumbnail.jpg`;
+        this.url = `${environment.contentUrl}/${album.type}/${album.id}/thumbnail.jpg`;
     }
 }
 

@@ -1,9 +1,9 @@
 /**
  * Author: Federico Engler
  *
- * The purpose of defining this settings object in this manner, is to keep
+ * The purpose of defining this environment object in this manner, is to keep
  * the logic in my code clean from low-level checks on the process.env object.
- * Also, this provides a transparent mechanism in which to provide reasonable
+ * Also, this provides a subtle mechanism in which to provide reasonable
  * default values where applicable.
  */
 export default {
@@ -13,6 +13,10 @@ export default {
     dbHost: process.env.FARODYNE_DB_HOST,
     dbUsername: process.env.FARODYNE_DB_USERNAME,
     dbPassword: process.env.FARODYNE_DB_PASSWORD,
+
+    // Loki parameters.
+    lokiHost: process.env.FARODYNE_LOKI_HOST || 'http://loki',
+    lokiPort: process.env.FARODYNE_LOKI_PORT || '3100',
 
     // REST API parameters.
     apiUser: process.env.FARODYNE_API_USER,

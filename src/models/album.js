@@ -6,7 +6,7 @@
  */
 import Image from './image';
 import Video from './video';
-import { settings } from '../utils';
+import { environment } from '../utils';
 
 class Album {
     /**
@@ -24,7 +24,7 @@ class Album {
         // of frontend image models.
         this.images = album.images
             ? album.images.map((image) => {
-                  const url = `${settings.contentUrl}/${album.type}/${album.id}/${image.id}.jpg`;
+                  const url = `${environment.contentUrl}/${album.type}/${album.id}/${image.id}.jpg`;
                   return new Image(url, image.caption);
               })
             : [];

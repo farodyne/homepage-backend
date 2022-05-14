@@ -8,14 +8,15 @@
 import assert from 'assert';
 import { MongoClient } from 'mongodb';
 import Logger from './logger';
+import environment from './environment';
 
 class DbClient {
     /**
      * Constructs an instance of the database client.
      */
-    constructor(settings) {
+    constructor() {
         const logger = new Logger();
-        const { dbHost, dbPort, dbName, dbUsername, dbPassword } = settings;
+        const { dbHost, dbPort, dbName, dbUsername, dbPassword } = environment;
 
         // Verify that the critical database details have been provided.
         assert(dbHost, 'The database host must be specified.');
@@ -29,7 +30,7 @@ class DbClient {
             this.client.connect();
             logger.info('Successfully connected to the database.');
         } catch (error) {
-            console.error('Failed to connect to the database:\n', error);
+            logger.error('Failed to connect to the database:\n', error);
         }
     }
 

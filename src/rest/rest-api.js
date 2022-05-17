@@ -82,7 +82,10 @@ class RespApi {
 
         const ip = requestIp.getClientIp(req);
 
+        // Log out information about the request in a JSON format that
+        // is suitable for Grafana to capture from the Loki datasource.
         this.logger.info({ ip, album: id, method: req.method });
+
         const cursor = await this.database.getAlbum(id);
 
         if (cursor) {

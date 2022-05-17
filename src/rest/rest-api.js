@@ -6,6 +6,7 @@
  */
 import cors from 'cors';
 import express from 'express';
+import requestIp from 'request-ip';
 import bodyParser from 'body-parser';
 import basicAuth from 'express-basic-auth';
 import { Logger, environment } from '../utils';
@@ -64,7 +65,7 @@ class RespApi {
             res.json(newest.map((newest) => new AlbumMiniature(newest)));
         } else {
             const error = 'Failed to fetch latest album thumbnails.';
-            this.logger.error(error);
+            this.logger.error({ error });
             res.status(404).send({ error });
         }
     }
@@ -79,16 +80,16 @@ class RespApi {
             params: { id }
         } = req;
 
-        const ip = req.headers['x-forwarded-for'] || req.socket.remoteAddress;
+        const ip = requestIp.getClientIp(req);
 
-        this.logger.info(`Hanling GET request (${ip}) for album: ${id}`);
+        this.logger.info({ ip, album: id, method: req.method });
         const cursor = await this.database.getAlbum(id);
 
         if (cursor) {
             res.json(new Album(cursor));
         } else {
             const error = `No album with id: ${id}.`;
-            this.logger.error(error);
+            this.logger.error({ error });
             res.status(404).send({ error });
         }
     }
@@ -110,7 +111,7 @@ class RespApi {
             res.json(new Section(await cursor.toArray()));
         } else {
             const error = `No section of type: ${type}.`;
-            this.logger.error(error);
+            this.logger.error({ error });
             res.status(404).send({ error });
         }
     }

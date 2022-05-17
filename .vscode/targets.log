@@ -8,12 +8,12 @@ make: *** No rule to make target 'all'.  Stop.
 # This is free software: you are free to change and redistribute it.
 # There is NO WARRANTY, to the extent permitted by law.
 
-# Make data base, printed on Sat May 14 19:58:38 2022
+# Make data base, printed on Tue May 17 15:40:53 2022
 
 # Variables
 
 # environment
-REMOTE_CONTAINERS_SOCKETS = ["/tmp/vscode-ssh-auth-65b53b0ae68f67455e26e3cd6f355fa54d6b6cfa.sock","/home/node/.gnupg/S.gpg-agent"]
+REMOTE_CONTAINERS_SOCKETS = ["/tmp/vscode-ssh-auth-8d591cc5ccfa8f68c991bb5b4f4a935a1f93c2f3.sock","/home/node/.gnupg/S.gpg-agent"]
 # environment
 LC_ALL = C
 # environment
@@ -65,7 +65,7 @@ APPLICATION_INSIGHTS_NO_DIAGNOSTIC_CHANNEL = true
 # environment
 YARN_VERSION = 1.22.18
 # environment
-SSH_AUTH_SOCK = /tmp/vscode-ssh-auth-65b53b0ae68f67455e26e3cd6f355fa54d6b6cfa.sock
+SSH_AUTH_SOCK = /tmp/vscode-ssh-auth-8d591cc5ccfa8f68c991bb5b4f4a935a1f93c2f3.sock
 # default
 .SHELLFLAGS := -c
 # environment
@@ -109,7 +109,7 @@ NODE_VERSION = 16.14.2
 # environment
 VSCODE_LOG_NATIVE = false
 # environment
-REMOTE_CONTAINERS_IPC = /tmp/vscode-remote-containers-ipc-65b53b0ae68f67455e26e3cd6f355fa54d6b6cfa.sock
+REMOTE_CONTAINERS_IPC = /tmp/vscode-remote-containers-ipc-8d591cc5ccfa8f68c991bb5b4f4a935a1f93c2f3.sock
 # environment
 REMOTE_CONTAINERS = true
 # automatic
@@ -137,7 +137,7 @@ _ = /bin/cat
 # environment
 NVM_RC_VERSION = 
 # environment
-VSCODE_IPC_HOOK_CLI = /tmp/vscode-ipc-8077e7e1-4500-443f-a0f4-05e0363fda2f.sock
+VSCODE_IPC_HOOK_CLI = /tmp/vscode-ipc-d9ff8e5b-fb7d-4083-9914-e06a8c34bc00.sock
 # environment
 NVM_CD_FLAGS = 
 # environment
@@ -220,6 +220,6 @@ deps:
 # strcache performance: lookups = 32 / hit rate = 18%
 # hash-table stats:
 # Load=26/8192=0%, Rehash=0, Collisions=0/32=0%
-# Finished Make data base on Sat May 14 19:58:38 2022
+# Finished Make data base on Tue May 17 15:40:53 2022
 
  

@@ -19,14 +19,16 @@ class Logger {
      */
     constructor(label, level) {
         const { lokiHost, lokiPort } = environment;
+        const logFormat = this.getLogFormat(label);
 
         return createLogger({
             level: level || 'debug',
-            format: this.getLogFormat(label),
+            format: logFormat,
             transports: [
                 new transports.Console(),
                 new LokiTransport({
-                    host: `${lokiHost}:${lokiPort}`
+                    host: `${lokiHost}:${lokiPort}`,
+                    format: logFormat
                 })
             ]
         });

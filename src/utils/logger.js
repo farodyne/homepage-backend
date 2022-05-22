@@ -17,15 +17,20 @@ class Logger {
      * logging and an additional one for Loki/Grafana.
      * @returns A logger with pre-registered transports.
      */
-    constructor(label, level) {
+    constructor(label) {
         const { lokiHost, lokiPort } = environment;
         const logFormat = this.getLogFormat(label);
 
         return createLogger({
-            level: level || 'debug',
-            format: logFormat,
+            // defaultMeta: { service: 'farodyne-backend' },
             transports: [
-                new transports.Console(),
+                // Register a standard console transport.
+                new transports.Console({
+                    format: logFormat
+                }),
+
+                // Register a Loki transport to allow me to analyze my logs
+                // and other metrics using a Grafana dashboard.
                 new LokiTransport({
                     host: `${lokiHost}:${lokiPort}`,
                     format: logFormat
@@ -40,7 +45,7 @@ class Logger {
      * @return {Object} A logger format object.
      */
     getLogFormat(label) {
-        return format.combine(format.timestamp(), format.label({ label }), format.json());
+        return format.combine(format.label({ label }), format.json());
     }
 }
 

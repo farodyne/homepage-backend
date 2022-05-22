@@ -34,7 +34,7 @@ class RespApi {
         // Store local object references.
         this.api = api;
         this.database = database;
-        this.logger = new Logger();
+        this.logger = new Logger('farodyne-backend');
     }
 
     /**

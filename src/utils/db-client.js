@@ -15,7 +15,7 @@ class DbClient {
      * Constructs an instance of the database client.
      */
     constructor() {
-        const logger = new Logger();
+        const logger = new Logger('farodyne-database');
         const { dbHost, dbPort, dbName, dbUsername, dbPassword } = environment;
 
         // Verify that the critical database details have been provided.
